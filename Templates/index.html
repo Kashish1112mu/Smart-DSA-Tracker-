@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>DSA Tracker</title>
 
-    <!-- Bootstrap -->
+    <p class="text-center text-light">
+        AI-powered DSA Tracker to manage problems, track progress, and get smart practice recommendations.
+    </p>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <style>
@@ -27,7 +31,7 @@
         }
 
         .stats-card {
-            background: rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.2);
             backdrop-filter: blur(10px);
             border-radius: 20px;
         }
@@ -40,43 +44,89 @@
 
 <body>
 
+<nav class="navbar navbar-dark bg-dark px-3">
+    <span class="navbar-brand">DSA Tracker</span>
+
+    <div>
+        <a href="/" class="btn btn-sm btn-light">Home</a>
+        <a href="/add" class="btn btn-sm btn-light">Add</a>
+        <a href="/ai" class="btn btn-sm btn-warning">AI Coach</a>
+    </div>
+</nav>
+
 <div class="container mt-5">
 
-    <!-- Title -->
     <h1 class="text-center mb-4">🚀 DSA Tracker Dashboard</h1>
 
-    <!-- Stats Section -->
-    <div class="row text-center mb-4">
+    <div class="card stats-card p-4 mb-4">
+
+    <h4 class="mb-3">🤖 AI Progress Prediction</h4>
+
+    <hr>
+
+    <p><strong>Current Readiness :</strong> {{ readiness }}%</p>
+
+    <p><strong>Target Readiness :</strong> 90%</p>
+
+    <p><strong>Daily Goal :</strong> 3 Problems / Day</p>
+
+    <hr>
+
+    <p>{{ prediction }}</p>
+
+</div>
+
+    
+    <!-- Stats -->
+    <div class="row g-3 text-center mb-4">
 
         <div class="col-md-4">
-            <div class="card stats-card p-3">
+            <div class="card stats-card p-3 h-100">
                 <h5>Total Problems</h5>
                 <h2>{{ problems|length }}</h2>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card stats-card p-3">
+            <div class="card stats-card p-3 h-100">
                 <h5>Solved</h5>
                 <h2>{{ problems | selectattr(3, 'equalto', 'Solved') | list | length }}</h2>
             </div>
         </div>
 
         <div class="col-md-4">
-            <div class="card stats-card p-3">
+            <div class="card stats-card p-3 h-100">
                 <h5>Unsolved</h5>
                 <h2>{{ problems | selectattr(3, 'equalto', 'Not Solved') | list | length }}</h2>
             </div>
         </div>
 
+        <div class="col-md-4 mx-auto">
+            <div class="card stats-card p-3 h-100">
+                <h5>Interview Readiness</h5>
+                <h2>{{ readiness }}%</h2>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Add Button -->
+    <!-- Buttons -->
     <div class="text-center mb-4">
         <a href="/add" class="btn btn-light px-4 btn-custom">➕ Add Problem</a>
+        <a href="/ai" class="btn btn-warning px-4 btn-custom ms-2">🤖 AI Coach</a>
     </div>
 
-    <!-- Problems Grid -->
+    <!-- Recommendations -->
+    {% if recommendations %}
+    <div class="alert alert-info">
+        <h5>🤖 Smart Recommendations</h5>
+        {% for rec in recommendations %}
+        <p>{{ rec }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Problems -->
     <div class="row">
 
         {% for problem in problems %}
@@ -84,33 +134,38 @@
 
             <div class="card problem-card shadow mb-4 p-3">
 
-                <!-- Problem Name -->
-                <h5>{{ problem[1] }}</h5>
+                <h5>{{ problem['name'] }}</h5>
 
-                <!-- Difficulty -->
-                {% if problem[2] == 'Easy' %}
-                    <span class="badge bg-success">Easy</span>
-                {% elif problem[2] == 'Medium' %}
-                    <span class="badge bg-warning text-dark">Medium</span>
+                {% if problem['difficulty'] == 'Easy' %}
+                <span class="badge bg-success">Easy</span>
+                {% elif problem['difficulty'] == 'Medium' %}
+                <span class="badge bg-warning text-dark">Medium</span>
                 {% else %}
-                    <span class="badge bg-danger">Hard</span>
+                <span class="badge bg-danger">Hard</span>
                 {% endif %}
 
-                <!-- Status -->
                 <p class="mt-2">
-                    {% if problem[3] == 'Solved' %}
-                        <span class="badge bg-success">Solved</span>
+                    {% if problem['status'] == 'Solved' %}
+                    <span class="badge bg-success">Solved</span>
                     {% else %}
-                        <span class="badge bg-secondary">Not Solved</span>
+                    <span class="badge bg-secondary">Not Solved</span>
                     {% endif %}
                 </p>
 
-                <!-- Date -->
-                <small class="text-muted">📅 {{ problem[4] }}</small>
+                <small class="text-muted">📅 {{ problem['date_added'] }}</small>
 
-                <!-- Delete Button -->
+                <p class="mt-2">📚 Topic: {{ problem['topic'] }}</p>
+
+                <p>💻 Platform: {{ problem['platform'] }}</p>
+
+                <p>🔁 Attempts: {{ problem['attempts'] }}</p>
+
+                {% if problem['revision_needed'] %}
+                <span class="badge bg-info">Revision Needed</span>
+                {% endif %}
+
                 <div class="mt-3">
-                    <a href="/delete/{{ problem[0] }}" class="btn btn-sm btn-outline-danger btn-custom">
+                    <a href="/delete/{{ problem['id'] }}" class="btn btn-sm btn-outline-danger btn-custom">
                         Delete
                     </a>
                 </div>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Add Problem</title>
 
@@ -25,53 +26,65 @@
 
 <body>
 
-<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+    <div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
 
-    <div class="card form-card shadow p-4" style="width: 400px;">
+        <div class="card form-card shadow p-4" style="width: 400px;">
 
-        <h3 class="text-center mb-4">➕ Add New Problem</h3>
+            <h3 class="text-center mb-4">➕ Add New Problem</h3>
 
-        <form method="POST">
+            <form method="POST">
 
-            <!-- Problem Name -->
-            <div class="mb-3">
-                <label class="form-label">Problem Name</label>
-                <input type="text" name="name" class="form-control" placeholder="Enter problem name" required>
-            </div>
+                <!-- Problem Name -->
+                <div class="mb-3">
+                    <label class="form-label">Problem Name</label>
+                    <input type="text" name="name" class="form-control" placeholder="Enter problem name" required>
+                </div>
 
-            <!-- Difficulty -->
-            <div class="mb-3">
-                <label class="form-label">Difficulty</label>
-                <select name="difficulty" class="form-select">
-                    <option value="Easy">Easy</option>
-                    <option value="Medium">Medium</option>
-                    <option value="Hard">Hard</option>
-                </select>
-            </div>
+                <!-- Difficulty -->
+                <div class="mb-3">
+                    <label class="form-label">Difficulty</label>
+                    <select name="difficulty" class="form-select">
+                        <option value="Easy">Easy</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Hard">Hard</option>
+                    </select>
+                </div>
 
-            <!-- Status -->
-            <div class="mb-3">
-                <label class="form-label">Status</label>
-                <select name="status" class="form-select">
-                    <option value="Solved">Solved</option>
-                    <option value="Not Solved">Not Solved</option>
-                </select>
-            </div>
+                <!-- Status -->
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    <select name="status" class="form-select">
+                        <option value="Solved">Solved</option>
+                        <option value="Not Solved">Not Solved</option>
+                    </select>
+                </div>
 
-            <!-- Buttons -->
-            <button type="submit" class="btn btn-primary w-100 btn-custom">
-                Add Problem
-            </button>
+                <!-- Buttons -->
+                <button type="submit" class="btn btn-primary w-100 btn-custom">
+                    Add Problem
+                </button>
 
-            <a href="/" class="btn btn-secondary w-100 mt-2 btn-custom">
-                Back
-            </a>
+                <a href="/" class="btn btn-secondary w-100 mt-2 btn-custom">
+                    Back
+                </a>
 
-        </form>
+                <input type="text" name="topic" placeholder="Topic">
+
+                <input type="text" name="platform" placeholder="Platform">
+
+                <input type="number" name="attempts" placeholder="Attempts" value="1">
+
+                <label>
+                    Revision Needed
+                    <input type="checkbox" name="revision_needed">
+                </label>
+
+            </form>
+
+        </div>
 
     </div>
 
-</div>
-
 </body>
+
 </html>
